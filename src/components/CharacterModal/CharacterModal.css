@@ -13,3 +13,12 @@ dialog {
   border: 2px solid red;
   border-radius: 50%;
 }
+
+.marker {
+  position: absolute;
+  font-size: 50px;
+  color: greenyellow;
+  text-shadow: 1px 2px 3px black;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+}
