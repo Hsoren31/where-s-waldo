@@ -1,3 +1,4 @@
+import fetchGuess from "../../hooks/fetchGuess";
 import "./CharacterModal.css";
 import { useEffect, useRef, useState } from "react";
 
@@ -17,32 +18,21 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
   };
 
   async function handleSubmit() {
-    try {
-      let response = await fetch(stage1url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "Application/JSON",
-        },
-        body: JSON.stringify({ character, guess }),
-      });
-      let { result } = await response.json();
-      if (result) {
-        const newMarker = {
-          id: new Date().getTime(),
-          x: mouseCoordinates.x,
-          y: mouseCoordinates.y,
-        };
-        setMarkers([...markers, newMarker]);
-        setModal(false);
-        dialogRef.current.close();
-        return;
-      }
-      alert(result);
+    let result = await fetchGuess(stage1url, { character, guess });
+    if (result) {
+      let newMarker = {
+        id: new Date().getTime(),
+        x: mouseCoordinates.x,
+        y: mouseCoordinates.y,
+      };
+      setMarkers([...markers, newMarker]);
       setModal(false);
       dialogRef.current.close();
-    } catch (error) {
-      alert(error);
+      return;
     }
+    setModal(false);
+    dialogRef.current.close();
+    alert(result);
   }
 
   useEffect(() => {
