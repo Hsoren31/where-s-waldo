@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
   const dialogRef = useRef();
   const [markers, setMarkers] = useState([]);
-  const [character, setCharacter] = useState("Waldo");
   const guess = mouseCoordinates;
   const stage1url =
     "http://localhost:5433/96533e1a-d0b0-46ec-ab56-5c8157b0c2ac";
@@ -17,7 +16,8 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
     }
   };
 
-  async function handleSubmit() {
+  async function handleSubmit(e) {
+    let character = e.target.value;
     let result = await fetchGuess(stage1url, { character, guess });
     if (result) {
       let newMarker = {
@@ -74,21 +74,23 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
         }}
       >
         <button onClick={toggleMenu}>Close</button>
-        <form action={handleSubmit}>
-          <select
-            name="characters"
-            id="character-select"
-            value={character}
-            onChange={(e) => setCharacter(e.target.value)}
-          >
-            <option value="Waldo">Waldo</option>
-            <option value="Wenda">Wenda</option>
-            <option value="Wizard">Wizard Whitebeard</option>
-            <option value="Odlaw">Odlaw</option>
-            <option value="Woof">Woof</option>
-          </select>
-          <button type="submit">Check</button>
-        </form>
+        <ul>
+          <button onClick={handleSubmit} value={"Waldo"} key={"waldo"}>
+            Waldo
+          </button>
+          <button onClick={handleSubmit} value={"Wenda"} key={"wenda"}>
+            Wenda
+          </button>
+          <button onClick={handleSubmit} value={"Odlaw"} key={"odlaw"}>
+            Odlaw
+          </button>
+          <button onClick={handleSubmit} value={"Wizard"} key={"wizard"}>
+            Wizard Whitebeard
+          </button>
+          <button onClick={handleSubmit} value={"Woof"} key={"woof"}>
+            Woof
+          </button>
+        </ul>
       </dialog>
     </>
   );
