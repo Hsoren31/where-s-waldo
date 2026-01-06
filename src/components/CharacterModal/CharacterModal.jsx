@@ -2,9 +2,14 @@ import fetchGuess from "../../hooks/fetchGuess";
 import "./CharacterModal.css";
 import { useEffect, useRef, useState } from "react";
 
-function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
+function CharacterModal({
+  modal,
+  setModal,
+  toggleMenu,
+  mouseCoordinates,
+  updateMarkers,
+}) {
   const dialogRef = useRef();
-  const [markers, setMarkers] = useState([]);
   const guess = mouseCoordinates;
   const stage1url =
     "http://localhost:5433/96533e1a-d0b0-46ec-ab56-5c8157b0c2ac";
@@ -32,7 +37,7 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
         x: mouseCoordinates.x,
         y: mouseCoordinates.y,
       };
-      setMarkers([...markers, newMarker]);
+      updateMarkers(newMarker);
       setModal(false);
       setCharacters(
         characters.filter((character) => character.name !== e.target.value)
@@ -55,16 +60,6 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
 
   return (
     <>
-      {markers.map((marker) => (
-        <i
-          key={marker.id}
-          className="fa-regular fa-circle-check marker"
-          style={{
-            left: marker.x,
-            top: marker.y,
-          }}
-        ></i>
-      ))}
       {modal && (
         <div
           className="img_target"
