@@ -1,6 +1,7 @@
 import fetchGuess from "../../hooks/fetchGuess";
 import "./CharacterModal.css";
 import { useEffect, useRef, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 function CharacterModal({
   modal,
@@ -47,7 +48,7 @@ function CharacterModal({
     }
     setModal(false);
     dialogRef.current.close();
-    alert(result);
+    toast("Try again.");
   }
 
   useEffect(() => {
@@ -60,6 +61,12 @@ function CharacterModal({
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        newestOnTop
+      />
       {modal && (
         <div
           className="img_target"
