@@ -8,6 +8,13 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
   const guess = mouseCoordinates;
   const stage1url =
     "http://localhost:5433/96533e1a-d0b0-46ec-ab56-5c8157b0c2ac";
+  const [characters, setCharacters] = useState([
+    { name: "Waldo" },
+    { name: "Wenda" },
+    { name: "Odlaw" },
+    { name: "Wizard" },
+    { name: "Woof" },
+  ]);
 
   const handleOutsideClick = (e) => {
     if (e.target === dialogRef.current) {
@@ -27,6 +34,9 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
       };
       setMarkers([...markers, newMarker]);
       setModal(false);
+      setCharacters(
+        characters.filter((character) => character.name !== e.target.value)
+      );
       dialogRef.current.close();
       return;
     }
@@ -75,7 +85,16 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
       >
         <button onClick={toggleMenu}>Close</button>
         <ul>
-          <button onClick={handleSubmit} value={"Waldo"} key={"waldo"}>
+          {characters.map((character) => (
+            <button
+              onClick={handleSubmit}
+              value={character.name}
+              key={character.name}
+            >
+              {character.name}
+            </button>
+          ))}
+          {/* <button onClick={handleSubmit} value={"Waldo"} key={"waldo"}>
             Waldo
           </button>
           <button onClick={handleSubmit} value={"Wenda"} key={"wenda"}>
@@ -89,7 +108,7 @@ function CharacterModal({ modal, setModal, toggleMenu, mouseCoordinates }) {
           </button>
           <button onClick={handleSubmit} value={"Woof"} key={"woof"}>
             Woof
-          </button>
+          </button> */}
         </ul>
       </dialog>
     </>
