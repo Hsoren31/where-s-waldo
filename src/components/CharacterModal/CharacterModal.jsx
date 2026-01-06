@@ -89,21 +89,6 @@ function CharacterModal({
               {character.name}
             </button>
           ))}
-          {/* <button onClick={handleSubmit} value={"Waldo"} key={"waldo"}>
-            Waldo
-          </button>
-          <button onClick={handleSubmit} value={"Wenda"} key={"wenda"}>
-            Wenda
-          </button>
-          <button onClick={handleSubmit} value={"Odlaw"} key={"odlaw"}>
-            Odlaw
-          </button>
-          <button onClick={handleSubmit} value={"Wizard"} key={"wizard"}>
-            Wizard Whitebeard
-          </button>
-          <button onClick={handleSubmit} value={"Woof"} key={"woof"}>
-            Woof
-          </button> */}
         </ul>
       </dialog>
     </>
