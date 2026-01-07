@@ -1,6 +1,5 @@
 async function fetchGuess(url, guess) {
   try {
-    console.log(guess);
     let response = await fetch(url, {
       method: "POST",
       headers: {
@@ -11,7 +10,7 @@ async function fetchGuess(url, guess) {
     let { result } = await response.json();
     return result;
   } catch (error) {
-    alert(error);
+    console.error(error);
   }
 }
 
