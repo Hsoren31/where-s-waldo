@@ -5,6 +5,15 @@
   text-align: center;
 }
 
+.character-dialog {
+  background: transparent;
+  border: none;
+  position: absolute;
+  transform: translate(-17%, -10%);
+  padding: 0;
+  margin: 0;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
