@@ -1,11 +1,14 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./App.css";
 import CharacterModal from "./components/CharacterModal/CharacterModal";
+import Stopwatch from "./components/CharacterModal/Stopwatch";
 import { ToastContainer, toast } from "react-toastify";
 import fetchGuess from "../src/hooks/fetchGuess";
 
 function App() {
   const modalRef = useRef();
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(true);
   const [mouseCoordinates, setMouseCoordinates] = useState({
     x: null,
     y: null,
@@ -68,20 +71,33 @@ function App() {
       { name: "Woof" },
     ]);
     setMarkers([]);
+    setTime(0);
+    setIsRunning(true);
   };
 
   const endGame = () => {
     if (characterList.length === 0) {
+      setIsRunning(false);
       toast("You Won!");
       resetGame();
     }
   };
+
+  useEffect(() => {
+    let intervalId;
+    if (isRunning) {
+      // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
+      intervalId = setInterval(() => setTime(time + 1), 10);
+    }
+    return () => clearInterval(intervalId);
+  }, [isRunning, time]);
 
   endGame();
 
   return (
     <>
       <ToastContainer />
+      <Stopwatch time={time} />
       <h1>Space Station</h1>
       <img
         onClick={openModal}
