@@ -59,6 +59,26 @@ function App() {
     modalRef.current.close();
   };
 
+  const resetGame = () => {
+    setCharacterList([
+      { name: "Waldo" },
+      { name: "Wenda" },
+      { name: "Odlaw" },
+      { name: "Wizard" },
+      { name: "Woof" },
+    ]);
+    setMarkers([]);
+  };
+
+  const endGame = () => {
+    if (characterList.length === 0) {
+      toast("You Won!");
+      resetGame();
+    }
+  };
+
+  endGame();
+
   return (
     <>
       <ToastContainer />
