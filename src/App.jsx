@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import CharacterModal from "./components/CharacterModal/CharacterModal";
 import Stopwatch from "./components/CharacterModal/Stopwatch";
@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import fetchGuess from "../src/hooks/fetchGuess";
 
 function App() {
-  const modalRef = useRef();
+  const [showTarget, setShowTarget] = useState(false);
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [mouseCoordinates, setMouseCoordinates] = useState({
@@ -39,27 +39,21 @@ function App() {
       };
       updateMarkers(newMarker);
       setCharacterList(characterList.filter((c) => c.name !== character));
-      closeModal();
       toast("Found!");
+      setShowTarget(false);
       return;
     }
-    closeModal();
+    closeTarget();
     toast("Try again.");
   }
 
-  const handleOutsideClick = (e) => {
-    if (e.target === modalRef.current) {
-      closeModal();
-    }
-  };
-
-  const openModal = (e) => {
+  const openTarget = (e) => {
     setMouseCoordinates({ x: e.pageX, y: e.pageY });
-    modalRef.current.showModal();
+    showTarget ? setShowTarget(false) : setShowTarget(true);
   };
 
-  const closeModal = () => {
-    modalRef.current.close();
+  const closeTarget = () => {
+    setShowTarget(false);
   };
 
   const resetGame = () => {
@@ -100,7 +94,7 @@ function App() {
       <Stopwatch time={time} />
       <h1>Space Station</h1>
       <img
-        onClick={openModal}
+        onClick={openTarget}
         src="../space_station_wheres_waldo.jpg"
         alt="where's waldo location"
       />
@@ -114,17 +108,13 @@ function App() {
           }}
         ></i>
       ))}
-      <dialog
-        ref={modalRef}
-        onClick={handleOutsideClick}
-        className="character-dialog"
-        style={{ top: mouseCoordinates.y, left: mouseCoordinates.x }}
-      >
+      {showTarget && (
         <CharacterModal
-          closeModal={closeModal}
+          closeModal={closeTarget}
+          coordinates={mouseCoordinates}
           handleGuessSubmit={handleGuessSubmit}
         />
-      </dialog>
+      )}
     </>
   );
 }

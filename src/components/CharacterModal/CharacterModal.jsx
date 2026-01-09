@@ -1,8 +1,11 @@
 import "./CharacterModal.css";
 
-function CharacterModal({ closeModal, handleGuessSubmit }) {
+function CharacterModal({ closeModal, coordinates, handleGuessSubmit }) {
   return (
-    <div className="character-modal">
+    <div
+      className="character-modal"
+      style={{ top: coordinates.y, left: coordinates.x }}
+    >
       <div className="target"></div>
       <div className="character-menu">
         <button onClick={closeModal}>Close</button>

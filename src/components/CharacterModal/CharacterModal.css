@@ -1,5 +1,7 @@
 .character-modal {
   display: flex;
+  position: absolute;
+  transform: translate(-25px, -25px);
 }
 
 .target {
