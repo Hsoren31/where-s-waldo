@@ -4,9 +4,11 @@ import CharacterModal from "./components/CharacterModal/CharacterModal";
 import Stopwatch from "./components/CharacterModal/Stopwatch";
 import { ToastContainer, toast } from "react-toastify";
 import fetchGuess from "../src/hooks/fetchGuess";
+import EndGameMessage from "./components/CharacterModal/EndGameMessage";
 
 function App() {
   const [showTarget, setShowTarget] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [mouseCoordinates, setMouseCoordinates] = useState({
@@ -67,13 +69,13 @@ function App() {
     setMarkers([]);
     setTime(0);
     setIsRunning(true);
+    setGameOver(false);
   };
 
   const endGame = () => {
-    if (characterList.length === 0) {
+    if (characterList.length === 0 && gameOver == false) {
       setIsRunning(false);
-      toast("You Won!");
-      resetGame();
+      setGameOver(true);
     }
   };
 
@@ -113,6 +115,14 @@ function App() {
           closeModal={closeTarget}
           coordinates={mouseCoordinates}
           handleGuessSubmit={handleGuessSubmit}
+        />
+      )}
+      {gameOver && (
+        <EndGameMessage
+          showModal={gameOver}
+          setShowModal={setGameOver}
+          time={time}
+          resetGame={resetGame}
         />
       )}
     </>
