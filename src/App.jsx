@@ -52,8 +52,10 @@ function App() {
   }
 
   const openTarget = (e) => {
-    setMouseCoordinates({ x: e.pageX, y: e.pageY });
-    showTarget ? setShowTarget(false) : setShowTarget(true);
+    if (!gameOver) {
+      setMouseCoordinates({ x: e.pageX, y: e.pageY });
+      showTarget ? setShowTarget(false) : setShowTarget(true);
+    }
   };
 
   const closeTarget = () => {
