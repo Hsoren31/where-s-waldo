@@ -5,12 +5,14 @@ import Stopwatch from "./components/CharacterModal/Stopwatch";
 import { ToastContainer, toast } from "react-toastify";
 import fetchGuess from "../src/hooks/fetchGuess";
 import EndGameMessage from "./components/CharacterModal/EndGameMessage";
+import StartScreen from "./components/CharacterModal/StartScreen";
 
 function App() {
+  const [startScreen, setStartScreen] = useState(true);
   const [showTarget, setShowTarget] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(true);
+  const [isRunning, setIsRunning] = useState(false);
   const [mouseCoordinates, setMouseCoordinates] = useState({
     x: null,
     y: null,
@@ -58,6 +60,11 @@ function App() {
     setShowTarget(false);
   };
 
+  const startGame = () => {
+    setStartScreen(false);
+    setIsRunning(true);
+  };
+
   const resetGame = () => {
     setCharacterList([
       { name: "Waldo" },
@@ -92,6 +99,7 @@ function App() {
 
   return (
     <>
+      <StartScreen startScreen={startScreen} startGame={startGame} />
       <ToastContainer />
       <Stopwatch time={time} />
       <h1>Space Station</h1>
