@@ -18,7 +18,7 @@ function App() {
     y: null,
   });
   const [markers, setMarkers] = useState([]);
-  const stage = "http://localhost:5433/96533e1a-d0b0-46ec-ab56-5c8157b0c2ac";
+  const stage = "http://localhost:5433/e73a4d2f-c53c-4892-9511-af1c0f6764bc";
   const [characterList, setCharacterList] = useState([
     { name: "Waldo" },
     { name: "Wenda" },
@@ -104,7 +104,6 @@ function App() {
       <StartScreen startScreen={startScreen} startGame={startGame} />
       <ToastContainer />
       <Stopwatch time={time} />
-      <h1>Space Station</h1>
       <img
         onClick={openTarget}
         src="../space_station_wheres_waldo.jpg"
