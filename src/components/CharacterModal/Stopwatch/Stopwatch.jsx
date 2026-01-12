@@ -1,3 +1,5 @@
+import "./Stopwatch.css";
+
 const Stopwatch = ({ time }) => {
   // Minutes calculation
   const minutes = Math.floor((time % 360000) / 6000);
@@ -9,7 +11,7 @@ const Stopwatch = ({ time }) => {
   const milliseconds = time % 100;
 
   return (
-    <p>
+    <p id="stopwatch">
       {minutes.toString().padStart(2, "0")}:
       {seconds.toString().padStart(2, "0")}:
       {milliseconds.toString().padStart(2, "0")}

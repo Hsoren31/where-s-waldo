@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import CharacterModal from "./components/CharacterModal/CharacterModal";
-import Stopwatch from "./components/CharacterModal/Stopwatch";
+import Stopwatch from "./components/CharacterModal/Stopwatch/Stopwatch";
 import { ToastContainer, toast } from "react-toastify";
 import fetchGuess from "../src/hooks/fetchGuess";
 import EndGameMessage from "./components/CharacterModal/EndGameMessage";
