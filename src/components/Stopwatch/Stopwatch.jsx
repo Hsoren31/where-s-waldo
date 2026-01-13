@@ -1,5 +1,3 @@
-import "./Stopwatch.css";
-
 const Stopwatch = ({ time }) => {
   // Minutes calculation
   const minutes = Math.floor((time % 360000) / 6000);

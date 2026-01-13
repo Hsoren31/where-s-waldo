@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import fetchGuess from "../src/hooks/fetchGuess";
 import EndGameMessage from "./components/EndGameMessage";
 import StartScreen from "./components/StartScreen";
+import CharactersList from "./components/CharactersList";
 
 function App() {
   const [startScreen, setStartScreen] = useState(true);
@@ -20,15 +21,26 @@ function App() {
   const [markers, setMarkers] = useState([]);
   const stage = "http://localhost:5433/e73a4d2f-c53c-4892-9511-af1c0f6764bc";
   const [characterList, setCharacterList] = useState([
-    { name: "Waldo" },
-    { name: "Wenda" },
-    { name: "Odlaw" },
-    { name: "Wizard" },
-    { name: "Woof" },
+    { name: "Waldo", found: false },
+    { name: "Wenda", found: false },
+    { name: "Odlaw", found: false },
+    { name: "Wizard", found: false },
+    { name: "Woof", found: false },
   ]);
 
   function updateMarkers(newMarker) {
     setMarkers([...markers, newMarker]);
+  }
+
+  function markCharacterFound(characterFound) {
+    setCharacterList(
+      characterList.map((character) => {
+        if (character.name === characterFound) {
+          return { ...character, found: true };
+        }
+        return character;
+      })
+    );
   }
 
   async function handleGuessSubmit(e) {
@@ -42,7 +54,7 @@ function App() {
         y: mouseCoordinates.y,
       };
       updateMarkers(newMarker);
-      setCharacterList(characterList.filter((c) => c.name !== character));
+      markCharacterFound(character);
       toast("Found!");
       setShowTarget(false);
       return;
@@ -69,11 +81,11 @@ function App() {
 
   const resetGame = () => {
     setCharacterList([
-      { name: "Waldo" },
-      { name: "Wenda" },
-      { name: "Odlaw" },
-      { name: "Wizard" },
-      { name: "Woof" },
+      { name: "Waldo", found: false },
+      { name: "Wenda", found: false },
+      { name: "Odlaw", found: false },
+      { name: "Wizard", found: false },
+      { name: "Woof", found: false },
     ]);
     setMarkers([]);
     setTime(0);
@@ -82,7 +94,10 @@ function App() {
   };
 
   const endGame = () => {
-    if (characterList.length === 0 && gameOver == false) {
+    let allCharactersFound = characterList.every(
+      (character) => character.found !== false
+    );
+    if (!gameOver && allCharactersFound) {
       setIsRunning(false);
       setGameOver(true);
     }
@@ -103,7 +118,10 @@ function App() {
     <>
       <StartScreen startScreen={startScreen} startGame={startGame} />
       <ToastContainer />
-      <Stopwatch time={time} />
+      <div id="sidebar">
+        <Stopwatch time={time} />
+        <CharactersList characters={characterList} />
+      </div>
       <img
         onClick={openTarget}
         src="../space_station_wheres_waldo.jpg"
