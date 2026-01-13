@@ -1,25 +1,16 @@
 import { useState, useEffect } from "react";
-import "./App.css";
-import CharacterModal from "./components/CharacterModal/CharacterModal";
-import Stopwatch from "./components/Stopwatch/Stopwatch";
 import { ToastContainer, toast } from "react-toastify";
+import CharactersList from "./components/CharactersList";
+import CharacterModal from "./components/CharacterModal/CharacterModal";
 import fetchGuess from "../src/hooks/fetchGuess";
 import EndGameMessage from "./components/EndGameMessage";
 import StartScreen from "./components/StartScreen";
-import CharactersList from "./components/CharactersList";
+import Stopwatch from "./components/Stopwatch/Stopwatch";
+import "./App.css";
+
+const stage = "http://localhost:5433/e73a4d2f-c53c-4892-9511-af1c0f6764bc";
 
 function App() {
-  const [startScreen, setStartScreen] = useState(true);
-  const [showTarget, setShowTarget] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
-  const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
-  const [mouseCoordinates, setMouseCoordinates] = useState({
-    x: null,
-    y: null,
-  });
-  const [markers, setMarkers] = useState([]);
-  const stage = "http://localhost:5433/e73a4d2f-c53c-4892-9511-af1c0f6764bc";
   const [characterList, setCharacterList] = useState([
     { name: "Waldo", found: false },
     { name: "Wenda", found: false },
@@ -27,21 +18,25 @@ function App() {
     { name: "Wizard", found: false },
     { name: "Woof", found: false },
   ]);
+  const [gameOver, setGameOver] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
+  const [markers, setMarkers] = useState([]);
+  const [mouseCoordinates, setMouseCoordinates] = useState();
+  const [showTarget, setShowTarget] = useState(false);
+  const [startScreen, setStartScreen] = useState(true);
+  const [time, setTime] = useState(0);
 
-  function updateMarkers(newMarker) {
-    setMarkers([...markers, newMarker]);
-  }
+  const startGame = () => {
+    setStartScreen(false);
+    setIsRunning(true);
+  };
 
-  function markCharacterFound(characterFound) {
-    setCharacterList(
-      characterList.map((character) => {
-        if (character.name === characterFound) {
-          return { ...character, found: true };
-        }
-        return character;
-      })
-    );
-  }
+  const openTarget = (e) => {
+    if (!gameOver) {
+      setMouseCoordinates({ x: e.pageX, y: e.pageY });
+      showTarget ? setShowTarget(false) : setShowTarget(true);
+    }
+  };
 
   async function handleGuessSubmit(e) {
     const character = e.target.value;
@@ -63,20 +58,33 @@ function App() {
     toast("Try again.");
   }
 
-  const openTarget = (e) => {
-    if (!gameOver) {
-      setMouseCoordinates({ x: e.pageX, y: e.pageY });
-      showTarget ? setShowTarget(false) : setShowTarget(true);
-    }
-  };
-
   const closeTarget = () => {
     setShowTarget(false);
   };
 
-  const startGame = () => {
-    setStartScreen(false);
-    setIsRunning(true);
+  function updateMarkers(newMarker) {
+    setMarkers([...markers, newMarker]);
+  }
+
+  function markCharacterFound(characterFound) {
+    setCharacterList(
+      characterList.map((character) => {
+        if (character.name === characterFound) {
+          return { ...character, found: true };
+        }
+        return character;
+      })
+    );
+  }
+
+  const endGame = () => {
+    let allCharactersFound = characterList.every(
+      (character) => character.found !== false
+    );
+    if (!gameOver && allCharactersFound) {
+      setIsRunning(false);
+      setGameOver(true);
+    }
   };
 
   const resetGame = () => {
@@ -91,16 +99,6 @@ function App() {
     setTime(0);
     setIsRunning(true);
     setGameOver(false);
-  };
-
-  const endGame = () => {
-    let allCharactersFound = characterList.every(
-      (character) => character.found !== false
-    );
-    if (!gameOver && allCharactersFound) {
-      setIsRunning(false);
-      setGameOver(true);
-    }
   };
 
   useEffect(() => {
