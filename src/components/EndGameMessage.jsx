@@ -1,32 +1,34 @@
 import { useEffect, useRef } from "react";
 import Stopwatch from "./Stopwatch/Stopwatch.jsx";
 
-function EndGameMessage({ showModal, setShowModal, time, resetGame }) {
+function EndGameMessage({ gameOver, setGameOver, time, resetGame }) {
   const modalRef = useRef();
 
   useEffect(() => {
-    if (showModal) {
+    if (gameOver) {
       modalRef.current.showModal();
-    } else {
-      modalRef.current.close();
     }
-  }, [showModal]);
+  }, [gameOver]);
 
   const close = () => {
     modalRef.current.close();
-    setShowModal(false);
+    setGameOver(false);
   };
 
   return (
-    <dialog ref={modalRef}>
-      <h1>Where's Waldo Space Station</h1>
-      <h1>WoHoo!!!</h1>
-      <Stopwatch time={time} />
-      <div>
-        <button onClick={resetGame}>Restart</button>
-        <button onClick={close}>Close</button>
-      </div>
-    </dialog>
+    <>
+      {gameOver && (
+        <dialog ref={modalRef}>
+          <h1>Where's Waldo Space Station</h1>
+          <h1>WoHoo!!!</h1>
+          <Stopwatch time={time} />
+          <div>
+            <button onClick={resetGame}>Restart</button>
+            <button onClick={close}>Close</button>
+          </div>
+        </dialog>
+      )}
+    </>
   );
 }
 

@@ -127,21 +127,18 @@ function App() {
         alt="where's waldo location"
       />
       <Markers markers={markers} />
-      {showTarget && (
-        <CharacterModal
-          closeModal={closeTarget}
-          coordinates={mouseCoordinates}
-          handleGuessSubmit={handleGuessSubmit}
-        />
-      )}
-      {gameOver && (
-        <EndGameMessage
-          showModal={gameOver}
-          setShowModal={setGameOver}
-          time={time}
-          resetGame={resetGame}
-        />
-      )}
+      <CharacterModal
+        showTarget={showTarget}
+        closeModal={closeTarget}
+        coordinates={mouseCoordinates}
+        handleGuessSubmit={handleGuessSubmit}
+      />
+      <EndGameMessage
+        gameOver={gameOver}
+        setGameOver={setGameOver}
+        time={time}
+        resetGame={resetGame}
+      />
     </>
   );
 }
