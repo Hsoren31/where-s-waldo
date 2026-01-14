@@ -4,6 +4,7 @@ import CharactersList from "./components/CharactersList";
 import CharacterModal from "./components/CharacterModal/CharacterModal";
 import fetchGuess from "../src/hooks/fetchGuess";
 import EndGameMessage from "./components/EndGameMessage";
+import Markers from "./components/Markers";
 import StartScreen from "./components/StartScreen";
 import Stopwatch from "./components/Stopwatch/Stopwatch";
 import "./App.css";
@@ -125,16 +126,7 @@ function App() {
         src="../space_station_wheres_waldo.jpg"
         alt="where's waldo location"
       />
-      {markers.map((marker) => (
-        <i
-          key={marker.id}
-          className="fa-regular fa-circle-check marker"
-          style={{
-            left: marker.x,
-            top: marker.y,
-          }}
-        ></i>
-      ))}
+      <Markers markers={markers} />
       {showTarget && (
         <CharacterModal
           closeModal={closeTarget}
