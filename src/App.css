@@ -21,3 +21,13 @@
   font-size: 1.25rem;
   background-color: hsl(0 0 3 / 70%);
 }
+
+.gameActive {
+  border: 3px solid purple;
+}
+
+.gameInActive {
+  filter: blur(1rem);
+  width: 100vw;
+  height: auto;
+}

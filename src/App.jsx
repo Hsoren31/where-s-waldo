@@ -10,6 +10,7 @@ import "./App.css";
 
 function App() {
   const [characterList, setCharacterList] = useState();
+  const [gameActive, setGameActive] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [mouseCoordinates, setMouseCoordinates] = useState();
@@ -22,6 +23,7 @@ function App() {
 
   const startGame = async () => {
     const characters = await fetchGame();
+    setGameActive(true);
     setCharacterList(characters);
     setStartScreen(false);
 
@@ -57,6 +59,7 @@ function App() {
       setShowTarget(false);
       if (result.gameEnd) {
         setGameOver(true);
+        setGameActive(false);
         setTime(result.time);
         clearInterval(intervalRef.current);
       }
@@ -83,16 +86,18 @@ function App() {
     <>
       <StartScreen startScreen={startScreen} startGame={startGame} />
       <ToastContainer />
-      <div id="sidebar">
-        <p>{secondsPassed.toFixed(3)}</p>
-        {characterList && <CharactersList characters={characterList} />}
-      </div>
+      {gameActive && (
+        <div id="sidebar">
+          <p>{secondsPassed.toFixed(3)}</p>
+          {characterList && <CharactersList characters={characterList} />}
+        </div>
+      )}
       <img
         onClick={openTarget}
         src="../space_station_wheres_waldo.jpg"
-        alt="where's waldo location"
+        className={`${gameActive ? "gameActive" : "gameInActive"}`}
       />
-      <Markers markers={markers} />
+      {gameActive && <Markers markers={markers} />}
       <CharacterModal
         showTarget={showTarget}
         closeModal={closeTarget}
