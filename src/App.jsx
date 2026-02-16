@@ -1,35 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import CharactersList from "./components/CharactersList";
 import CharacterModal from "./components/CharacterModal/CharacterModal";
-import fetchGuess from "../src/hooks/fetchGuess";
+import { fetchGame, fetchGuess } from "../src/hooks/fetchGuess";
 import EndGameMessage from "./components/EndGameMessage";
 import Markers from "./components/Markers";
 import StartScreen from "./components/StartScreen";
-import Stopwatch from "./components/Stopwatch/Stopwatch";
 import "./App.css";
 
-const stage = "http://localhost:5433/e73a4d2f-c53c-4892-9511-af1c0f6764bc";
-
 function App() {
-  const [characterList, setCharacterList] = useState([
-    { name: "Waldo", found: false },
-    { name: "Wenda", found: false },
-    { name: "Odlaw", found: false },
-    { name: "Wizard", found: false },
-    { name: "Woof", found: false },
-  ]);
+  const [characterList, setCharacterList] = useState();
   const [gameOver, setGameOver] = useState(false);
-  const [isRunning, setIsRunning] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [mouseCoordinates, setMouseCoordinates] = useState();
   const [showTarget, setShowTarget] = useState(false);
   const [startScreen, setStartScreen] = useState(true);
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const [now, setNow] = useState(null);
+  const intervalRef = useRef(null);
 
-  const startGame = () => {
+  const startGame = async () => {
+    const characters = await fetchGame();
+    setCharacterList(characters);
     setStartScreen(false);
-    setIsRunning(true);
+
+    setStartTime(Date.now());
+    setNow(Date.now());
+
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setNow(Date.now());
+    }, 10);
   };
 
   const openTarget = (e) => {
@@ -40,9 +42,10 @@ function App() {
   };
 
   async function handleGuessSubmit(e) {
-    const character = e.target.value;
-    const guess = mouseCoordinates;
-    let result = await fetchGuess(stage, { character, guess });
+    let result = await fetchGuess({
+      characterGuess: e.target.value,
+      locationGuess: mouseCoordinates,
+    });
     if (result) {
       let newMarker = {
         id: new Date().getTime(),
@@ -50,9 +53,13 @@ function App() {
         y: mouseCoordinates.y,
       };
       updateMarkers(newMarker);
-      markCharacterFound(character);
       toast("Found!");
       setShowTarget(false);
+      if (result.gameEnd) {
+        setGameOver(true);
+        setTime(result.time);
+        clearInterval(intervalRef.current);
+      }
       return;
     }
     closeTarget();
@@ -67,59 +74,18 @@ function App() {
     setMarkers([...markers, newMarker]);
   }
 
-  function markCharacterFound(characterFound) {
-    setCharacterList(
-      characterList.map((character) => {
-        if (character.name === characterFound) {
-          return { ...character, found: true };
-        }
-        return character;
-      })
-    );
+  let secondsPassed = 0;
+  if (startTime != null && now != null) {
+    secondsPassed = (now - startTime) / 1000;
   }
-
-  const endGame = () => {
-    let allCharactersFound = characterList.every(
-      (character) => character.found !== false
-    );
-    if (!gameOver && allCharactersFound) {
-      setIsRunning(false);
-      setGameOver(true);
-    }
-  };
-
-  const resetGame = () => {
-    setCharacterList([
-      { name: "Waldo", found: false },
-      { name: "Wenda", found: false },
-      { name: "Odlaw", found: false },
-      { name: "Wizard", found: false },
-      { name: "Woof", found: false },
-    ]);
-    setMarkers([]);
-    setTime(0);
-    setIsRunning(true);
-    setGameOver(false);
-  };
-
-  useEffect(() => {
-    let intervalId;
-    if (isRunning) {
-      // setting time from 0 to 1 every 10 milisecond using javascript setInterval method
-      intervalId = setInterval(() => setTime(time + 1), 10);
-    }
-    return () => clearInterval(intervalId);
-  }, [isRunning, time]);
-
-  endGame();
 
   return (
     <>
       <StartScreen startScreen={startScreen} startGame={startGame} />
       <ToastContainer />
       <div id="sidebar">
-        <Stopwatch time={time} />
-        <CharactersList characters={characterList} />
+        <p>{secondsPassed.toFixed(3)}</p>
+        {characterList && <CharactersList characters={characterList} />}
       </div>
       <img
         onClick={openTarget}
@@ -133,12 +99,7 @@ function App() {
         coordinates={mouseCoordinates}
         handleGuessSubmit={handleGuessSubmit}
       />
-      <EndGameMessage
-        gameOver={gameOver}
-        setGameOver={setGameOver}
-        time={time}
-        resetGame={resetGame}
-      />
+      <EndGameMessage time={time} gameOver={gameOver} />
     </>
   );
 }

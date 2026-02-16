@@ -25,7 +25,7 @@ function CharacterModal({
             <button value={"Odlaw"} onClick={handleGuessSubmit}>
               Odlaw
             </button>
-            <button value={"Wizard"} onClick={handleGuessSubmit}>
+            <button value={"Wizard Whitebeard"} onClick={handleGuessSubmit}>
               Wizard
             </button>
             <button value={"Woof"} onClick={handleGuessSubmit}>
