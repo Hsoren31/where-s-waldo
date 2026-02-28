@@ -14,6 +14,7 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [mouseCoordinates, setMouseCoordinates] = useState();
+  const [coordinates, setCoordinates] = useState();
   const [showTarget, setShowTarget] = useState(false);
   const [startScreen, setStartScreen] = useState(true);
   const [time, setTime] = useState(null);
@@ -37,6 +38,14 @@ function App() {
   };
 
   const openTarget = (e) => {
+    let width = e.target.width;
+    let coordinates = { x: e.pageX, y: e.pageY };
+    let scale = width / 2560;
+    coordinates = {
+      x: Math.floor(e.pageX / scale) - 64,
+      y: Math.floor(e.pageY / scale) - 32,
+    };
+    setCoordinates(coordinates);
     if (!gameOver) {
       setMouseCoordinates({ x: e.pageX, y: e.pageY });
       showTarget ? setShowTarget(false) : setShowTarget(true);
@@ -46,7 +55,7 @@ function App() {
   async function handleGuessSubmit(e) {
     let result = await fetchGuess({
       characterGuess: e.target.value,
-      locationGuess: mouseCoordinates,
+      locationGuess: coordinates,
     });
     if (result) {
       let newMarker = {
