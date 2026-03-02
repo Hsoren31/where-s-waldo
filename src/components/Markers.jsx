@@ -7,8 +7,8 @@ function Markers({ markers }) {
             key={marker.id}
             className="fa-regular fa-circle-check marker"
             style={{
-              left: marker.x,
-              top: marker.y,
+              left: marker.x + "%",
+              top: marker.y + "%",
             }}
           ></i>
         ))}

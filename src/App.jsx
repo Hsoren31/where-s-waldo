@@ -47,7 +47,10 @@ function App() {
       y: ((e.pageY - top) / e.target.height) * 100,
     });
     if (!gameOver) {
-      setMouseCoordinates({ x: e.pageX, y: e.pageY });
+      setMouseCoordinates({
+        x: e.pageX,
+        y: e.pageY,
+      });
       showTarget ? setShowTarget(false) : setShowTarget(true);
     }
   };
@@ -60,8 +63,8 @@ function App() {
     if (result) {
       let newMarker = {
         id: new Date().getTime(),
-        x: mouseCoordinates.x,
-        y: mouseCoordinates.y,
+        x: coordinates.x,
+        y: coordinates.y,
       };
       updateMarkers(newMarker);
       toast("Found!");
@@ -101,13 +104,15 @@ function App() {
           {characterList && <CharactersList characters={characterList} />}
         </div>
       )}
-      <img
-        id="stage"
-        onClick={openTarget}
-        src="../space_station_wheres_waldo.jpg"
-        className={`${gameActive ? "gameActive" : "gameInActive"}`}
-      />
-      {gameActive && <Markers markers={markers} />}
+      <div id="frame">
+        <img
+          id="stage"
+          onClick={openTarget}
+          src="../space_station_wheres_waldo.jpg"
+          className={`${gameActive ? "gameActive" : "gameInActive"}`}
+        />
+        {gameActive && <Markers markers={markers} />}
+      </div>
       <CharacterModal
         showTarget={showTarget}
         closeModal={closeTarget}

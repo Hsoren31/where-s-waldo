@@ -28,6 +28,10 @@ img {
   height: auto;
 }
 
+#frame {
+  position: relative;
+}
+
 .gameInActive {
   filter: blur(1rem);
 }
