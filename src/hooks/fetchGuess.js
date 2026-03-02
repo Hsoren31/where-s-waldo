@@ -1,7 +1,7 @@
 async function fetchGame() {
   try {
     const response = await fetch(
-      `http://localhost:5433/game/create/05b48208-63b6-46ca-bcc4-9481bae6f489`,
+      `http://localhost:5433/game/create/3fbd9d38-cb29-492d-99de-8d4153caf34e`,
       {
         method: "POST",
         credentials: "include",
@@ -36,4 +36,22 @@ async function fetchGuess(guess) {
   }
 }
 
-export { fetchGame, fetchGuess };
+async function fetchLeaderboard() {
+  try {
+    const response = await fetch(
+      `http://localhost:5433/game/3fbd9d38-cb29-492d-99de-8d4153caf34e`,
+      {
+        method: "Get",
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export { fetchGame, fetchGuess, fetchLeaderboard };
