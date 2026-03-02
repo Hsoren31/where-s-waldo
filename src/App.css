@@ -22,12 +22,12 @@
   background-color: hsl(0 0 3 / 70%);
 }
 
-.gameActive {
-  border: 3px solid purple;
+img {
+  display: block;
+  max-width: 1664px;
+  height: auto;
 }
 
 .gameInActive {
   filter: blur(1rem);
-  width: 100vw;
-  height: auto;
 }

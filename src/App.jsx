@@ -38,14 +38,14 @@ function App() {
   };
 
   const openTarget = (e) => {
-    let width = e.target.width;
-    let coordinates = { x: e.pageX, y: e.pageY };
-    let scale = width / 2560;
-    coordinates = {
-      x: Math.floor(e.pageX / scale) - 64,
-      y: Math.floor(e.pageY / scale) - 32,
-    };
-    setCoordinates(coordinates);
+    const image = document.getElementById("stage");
+    const rect = image.getBoundingClientRect();
+    const top = rect.top + e.view.scrollY;
+    const left = rect.left + e.view.scrollX;
+    setCoordinates({
+      x: ((e.pageX - left) / e.target.width) * 100,
+      y: ((e.pageY - top) / e.target.height) * 100,
+    });
     if (!gameOver) {
       setMouseCoordinates({ x: e.pageX, y: e.pageY });
       showTarget ? setShowTarget(false) : setShowTarget(true);
@@ -102,6 +102,7 @@ function App() {
         </div>
       )}
       <img
+        id="stage"
         onClick={openTarget}
         src="../space_station_wheres_waldo.jpg"
         className={`${gameActive ? "gameActive" : "gameInActive"}`}
