@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router";
 function EndGameMessage({ gameOver, time }) {
   const modalRef = useRef();
   const [name, setName] = useState("");
+  const [error, setError] = useState({ state: false, msg: "" });
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -12,6 +13,10 @@ function EndGameMessage({ gameOver, time }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!name) {
+      setError({ state: true, msg: "Cannot submit empty name" });
+      return;
+    }
     await fetch("http://localhost:5433/game/leaderboard", {
       method: "Post",
       credentials: "include",
@@ -41,6 +46,7 @@ function EndGameMessage({ gameOver, time }) {
           <p>You found everyone in {time}</p>
           <form>
             <label htmlFor="name">Add your score to the Leaderboard</label>
+            {error && <p>{error.msg}</p>}
             <input
               type="text"
               name="name"
