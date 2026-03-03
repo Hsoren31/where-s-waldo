@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 
 function EndGameMessage({ gameOver, time }) {
   const modalRef = useRef();
@@ -20,6 +20,10 @@ function EndGameMessage({ gameOver, time }) {
       },
       body: JSON.stringify({ name: name }),
     }).then(navigate("/leaderboard"));
+  }
+
+  function handleSkip() {
+    navigate("/leaderboard");
   }
 
   useEffect(() => {
@@ -46,6 +50,7 @@ function EndGameMessage({ gameOver, time }) {
             />
             <button onClick={handleSubmit}>Enter</button>
           </form>
+          <button onClick={handleSkip}>Skip to Leaderboard</button>
         </dialog>
       )}
     </>
