@@ -113,6 +113,7 @@ function App() {
           showTarget={showTarget}
           coordinates={coordinates}
           handleGuessSubmit={handleGuessSubmit}
+          closeTarget={closeTarget}
         />
       </div>
       <EndGameMessage time={time} gameOver={gameOver} />

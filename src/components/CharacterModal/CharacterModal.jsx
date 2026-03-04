@@ -1,12 +1,18 @@
 import "./CharacterModal.css";
 
-function CharacterModal({ showTarget, coordinates, handleGuessSubmit }) {
+function CharacterModal({
+  showTarget,
+  closeTarget,
+  coordinates,
+  handleGuessSubmit,
+}) {
   const characters = ["Waldo", "Wenda", "Odlaw", "Wizard Whitebeard", "Woof"];
   return (
     <>
       {showTarget && (
         <>
           <div
+            onClick={closeTarget}
             id="target"
             style={{ top: coordinates.y + "%", left: coordinates.x + "%" }}
           ></div>
