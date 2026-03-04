@@ -13,7 +13,6 @@ function App() {
   const [gameActive, setGameActive] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [markers, setMarkers] = useState([]);
-  const [mouseCoordinates, setMouseCoordinates] = useState();
   const [coordinates, setCoordinates] = useState();
   const [showTarget, setShowTarget] = useState(false);
   const [startScreen, setStartScreen] = useState(true);
@@ -47,10 +46,6 @@ function App() {
       y: ((e.pageY - top) / e.target.height) * 100,
     });
     if (!gameOver) {
-      setMouseCoordinates({
-        x: e.pageX,
-        y: e.pageY,
-      });
       showTarget ? setShowTarget(false) : setShowTarget(true);
     }
   };
@@ -98,27 +93,28 @@ function App() {
     <>
       <StartScreen startScreen={startScreen} startGame={startGame} />
       <ToastContainer />
-      {gameActive && (
-        <div id="sidebar">
-          <p>{secondsPassed.toFixed(3)}</p>
-          {characterList && <CharactersList characters={characterList} />}
+      <div id="stage">
+        {gameActive && (
+          <div id="sidebar">
+            <p>{secondsPassed.toFixed(3)}</p>
+            {characterList && <CharactersList characters={characterList} />}
+          </div>
+        )}
+        <div id="frame">
+          <img
+            id="stage"
+            onClick={openTarget}
+            src="../space_station_wheres_waldo.jpg"
+            className={`${gameActive ? "gameActive" : "gameInActive"}`}
+          />
+          {gameActive && <Markers markers={markers} />}
         </div>
-      )}
-      <div id="frame">
-        <img
-          id="stage"
-          onClick={openTarget}
-          src="../space_station_wheres_waldo.jpg"
-          className={`${gameActive ? "gameActive" : "gameInActive"}`}
+        <CharacterModal
+          showTarget={showTarget}
+          coordinates={coordinates}
+          handleGuessSubmit={handleGuessSubmit}
         />
-        {gameActive && <Markers markers={markers} />}
       </div>
-      <CharacterModal
-        showTarget={showTarget}
-        closeModal={closeTarget}
-        coordinates={mouseCoordinates}
-        handleGuessSubmit={handleGuessSubmit}
-      />
       <EndGameMessage time={time} gameOver={gameOver} />
     </>
   );
