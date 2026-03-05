@@ -10,7 +10,8 @@ async function fetchGame() {
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-    return;
+    const result = response.json();
+    return result;
   } catch (error) {
     console.error(error);
   }

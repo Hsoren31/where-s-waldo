@@ -55,12 +55,14 @@ function App() {
       characterGuess: e.target.value,
       locationGuess: coordinates,
     });
-    if (result) {
+    if (result.found) {
+      console.log(result);
       let newMarker = {
         id: new Date().getTime(),
         x: coordinates.x,
         y: coordinates.y,
       };
+      updateCharacters(e.target.value);
       updateMarkers(newMarker);
       toast("Found!");
       setShowTarget(false);
@@ -82,6 +84,17 @@ function App() {
 
   function updateMarkers(newMarker) {
     setMarkers([...markers, newMarker]);
+  }
+
+  function updateCharacters(characterName) {
+    const newList = characterList.map((character) => {
+      if (character.name === characterName) {
+        return { ...character, found: true };
+      } else {
+        return character;
+      }
+    });
+    setCharacterList(newList);
   }
 
   let secondsPassed = 0;
@@ -110,6 +123,7 @@ function App() {
           {gameActive && <Markers markers={markers} />}
         </div>
         <CharacterModal
+          characters={characterList}
           showTarget={showTarget}
           coordinates={coordinates}
           handleGuessSubmit={handleGuessSubmit}

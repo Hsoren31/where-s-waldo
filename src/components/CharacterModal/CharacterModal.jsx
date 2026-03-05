@@ -5,8 +5,8 @@ function CharacterModal({
   closeTarget,
   coordinates,
   handleGuessSubmit,
+  characters,
 }) {
-  const characters = ["Waldo", "Wenda", "Odlaw", "Wizard Whitebeard", "Woof"];
   return (
     <>
       {showTarget && (
@@ -29,15 +29,15 @@ function CharacterModal({
 }
 
 function ChecklistButtons({ list, handleGuessSubmit }) {
-  const listItems = list.map((listItem) => (
-    <li>
+  const notFound = list.filter((listItem) => listItem.found !== true);
+  const listItems = notFound.map((listItem) => (
+    <li key={listItem.name}>
       <button
         onClick={handleGuessSubmit}
-        value={listItem}
+        value={listItem.name}
         className="checklist_btn"
-        key={listItem}
       >
-        {listItem}
+        {listItem.name}
       </button>
     </li>
   ));
