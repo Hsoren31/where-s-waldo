@@ -1,7 +1,7 @@
 async function fetchGame() {
   try {
     const response = await fetch(
-      `https://wheres-waldo-api-production-a65d.up.railway.app/game/create/1f229e49-059c-4836-9e87-474b324e7659`,
+      `https://wheres-waldo-api-production-a65d.up.railway.app/game/create/6b18a2d4-d1e0-4e84-90a8-67355098645b`,
       {
         method: "POST",
         credentials: "include",
@@ -43,7 +43,7 @@ async function fetchGuess(guess) {
 async function fetchLeaderboard() {
   try {
     const response = await fetch(
-      `https://wheres-waldo-api-production-a65d.up.railway.app/game/1f229e49-059c-4836-9e87-474b324e7659`,
+      `https://wheres-waldo-api-production-a65d.up.railway.app/game/6b18a2d4-d1e0-4e84-90a8-67355098645b`,
       {
         method: "Get",
       }
