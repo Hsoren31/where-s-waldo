@@ -5,7 +5,7 @@ async function fetchGame() {
       {
         method: "POST",
         credentials: "include",
-        mode: "CORS",
+        mode: "cors",
       }
     );
     if (!response.ok) {
