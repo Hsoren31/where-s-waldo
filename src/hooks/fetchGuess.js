@@ -1,7 +1,7 @@
 async function fetchGame() {
   try {
     const response = await fetch(
-      `https://wheres-waldo-api-production-a65d.up.railway.app/game/create/225ed2df-0c5f-4db7-a291-1f5913c09f06`,
+      `https://wheres-waldo-api-production-a65d.up.railway.app/game/create/space_station`,
       {
         method: "POST",
         credentials: "include",
