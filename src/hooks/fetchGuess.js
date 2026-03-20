@@ -20,15 +20,16 @@ async function fetchGame() {
 
 async function fetchGuess(guess) {
   try {
+    const game = localStorage.getItem("game");
     const response = await fetch(
-      "https://wheres-waldo-api-production-a65d.up.railway.app/game/guess",
+      "https://wheres-waldo-api-production-a65d.up.railway.app/game/guess/space_station",
       {
         method: "Post",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(guess),
+        body: JSON.stringify({ gameId: game, guess }),
       }
     );
     if (!response.ok) {
@@ -44,7 +45,7 @@ async function fetchGuess(guess) {
 async function fetchLeaderboard() {
   try {
     const response = await fetch(
-      `https://wheres-waldo-api-production-a65d.up.railway.app/game/6b18a2d4-d1e0-4e84-90a8-67355098645b`,
+      `https://wheres-waldo-api-production-a65d.up.railway.app/game/space_station`,
       {
         method: "Get",
       }

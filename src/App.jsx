@@ -22,9 +22,10 @@ function App() {
   const intervalRef = useRef(null);
 
   const startGame = async () => {
-    const characters = await fetchGame();
+    const game = await fetchGame();
+    localStorage.setItem("game", game.id);
     setGameActive(true);
-    setCharacterList(characters);
+    setCharacterList(game.characters);
     setStartScreen(false);
 
     setStartTime(Date.now());
@@ -42,8 +43,8 @@ function App() {
     const top = rect.top + e.view.scrollY;
     const left = rect.left + e.view.scrollX;
     setCoordinates({
-      x: ((e.pageX - left) / e.target.width) * 100,
-      y: ((e.pageY - top) / e.target.height) * 100,
+      x: (((e.pageX - left) / e.target.width) * 100).toFixed(2),
+      y: (((e.pageY - top) / e.target.height) * 100).toFixed(2),
     });
     if (!gameOver) {
       showTarget ? setShowTarget(false) : setShowTarget(true);
@@ -66,7 +67,7 @@ function App() {
       updateMarkers(newMarker);
       toast("Found!");
       setShowTarget(false);
-      if (result.gameEnd) {
+      if (result.gameOver) {
         setGameOver(true);
         setGameActive(false);
         setTime(result.time);

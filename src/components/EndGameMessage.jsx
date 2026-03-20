@@ -13,18 +13,31 @@ function EndGameMessage({ gameOver, time }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const game = localStorage.getItem("game");
     if (!name) {
       setError({ state: true, msg: "Cannot submit empty name" });
       return;
     }
-    await fetch("http://localhost:5433/game/leaderboard", {
-      method: "Post",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: name }),
-    }).then(navigate("/leaderboard"));
+    try {
+      const response = await fetch(
+        "https://wheres-waldo-api-production-a65d.up.railway.app/game/leaderboard",
+        {
+          method: "Post",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ gameId: game, playerName: name }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Response Status: ${response.status}`);
+      }
+      localStorage.removeItem("game");
+      navigate("/leaderboard");
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 
   function handleSkip() {
