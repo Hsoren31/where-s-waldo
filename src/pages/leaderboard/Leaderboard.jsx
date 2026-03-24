@@ -11,10 +11,10 @@ function Leaderboard() {
   }, []);
 
   return (
-    <>
-      <h1>Space Station</h1>
+    <div id="leaderboard_content">
+      <h1>High Scores</h1>
       <table>
-        <caption>High Scores</caption>
+        <caption>Space Station</caption>
         <thead>
           <tr>
             <th>Rank</th>
@@ -27,7 +27,7 @@ function Leaderboard() {
         </tbody>
       </table>
       <Link to="/">Go back</Link>
-    </>
+    </div>
   );
 }
 

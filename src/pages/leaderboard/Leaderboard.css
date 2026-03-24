@@ -1,4 +1,18 @@
-.leaderboard_row {
+#leaderboard_content {
   display: grid;
-  grid-template-columns: repeat(3, minmax(50px, 1fr));
+  gap: 1rem;
+}
+
+table {
+  border-spacing: 1rem;
+}
+
+caption {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+th,
+td {
+  padding: 10px;
 }
