@@ -13,17 +13,26 @@ function Leaderboard() {
   return (
     <>
       <h1>Space Station</h1>
-      <h2>High Scores</h2>
-      <ul>
-        {leaderboard &&
-          leaderboard.map((score, index) => (
-            <li key={index} className="leaderboard_row">
-              <p>{index + 1}</p>
-              <p>{score.playerName}</p>
-              <p>{score.time}</p>
-            </li>
-          ))}
-      </ul>
+      <table>
+        <caption>High Scores</caption>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leaderboard &&
+            leaderboard.map((score, index) => (
+              <tr key={score.id}>
+                <td>{index + 1}</td>
+                <td>{score.playerName}</td>
+                <td>{score.time}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
       <Link to="/">Go back</Link>
     </>
   );
