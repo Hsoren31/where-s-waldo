@@ -23,18 +23,41 @@ function Leaderboard() {
           </tr>
         </thead>
         <tbody>
-          {leaderboard &&
-            leaderboard.map((score, index) => (
-              <tr key={score.id}>
-                <td>{index + 1}</td>
-                <td>{score.playerName}</td>
-                <td>{score.time}</td>
-              </tr>
-            ))}
+          {leaderboard && <LeaderboardTable leaderboard={leaderboard} />}
         </tbody>
       </table>
       <Link to="/">Go back</Link>
     </>
+  );
+}
+
+function LeaderboardTable({ leaderboard }) {
+  const fullLeaderboard = [];
+
+  for (let i = 0; i <= 9; i++) {
+    if (leaderboard[i]) {
+      fullLeaderboard.push(leaderboard[i]);
+    } else {
+      fullLeaderboard.push({ playerName: null, time: null });
+    }
+  }
+
+  return (
+    <>
+      {fullLeaderboard.map((score, index) => (
+        <Score key={score.id} score={score} index={index} />
+      ))}
+    </>
+  );
+}
+
+function Score({ score, index }) {
+  return (
+    <tr>
+      <td>{index + 1}</td>
+      <td>{score.playerName ? score.playerName : "---"}</td>
+      <td>{score.time ? score.time : "---"}</td>
+    </tr>
   );
 }
 
