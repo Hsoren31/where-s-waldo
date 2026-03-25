@@ -40,3 +40,16 @@ img {
 .gameInActive {
   filter: blur(1rem);
 }
+
+#stages {
+  border: 2px solid purple;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+#stage_card {
+  img {
+    max-width: 100%;
+  }
+}
