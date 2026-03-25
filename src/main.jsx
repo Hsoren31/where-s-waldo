@@ -4,11 +4,13 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import "./index.css";
 import App from "./App.jsx";
 import Leaderboard from "./pages/leaderboard/Leaderboard.jsx";
+import ErrorPage from "./pages/errorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/leaderboard",
