@@ -21,12 +21,20 @@
 #sidebar {
   position: fixed;
   left: 0;
+  top: 0;
   padding: 0.5rem;
   font-size: 1.25rem;
   background-color: hsl(0 0 3 / 70%);
   z-index: 999;
+
+  display: flex;
+  max-height: 4rem;
 }
 
+img#characters {
+  max-width: 250px;
+  object-fit: contain;
+}
 img {
   display: block;
   max-width: 1664px;

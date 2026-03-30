@@ -1,11 +1,11 @@
 import { useState, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import CharactersList from "../components/CharactersList";
 import CharacterModal from "../components/CharacterModal/CharacterModal";
 import { fetchGame, fetchGuess } from "../hooks/fetchGuess";
 import EndGameMessage from "../components/EndGameMessage";
 import Markers from "../components/Markers";
 import StartScreen from "../components/StartScreen";
+import Characters from "../components/Characters";
 
 function Game() {
   const [characterList, setCharacterList] = useState();
@@ -110,7 +110,7 @@ function Game() {
         {gameActive && (
           <div id="sidebar">
             <p>{secondsPassed.toFixed(3)}</p>
-            {characterList && <CharactersList characters={characterList} />}
+            <Characters />
           </div>
         )}
         <div id="frame">
