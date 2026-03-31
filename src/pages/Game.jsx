@@ -110,10 +110,10 @@ function Game() {
         {gameActive && (
           <div id="sidebar">
             <p>{secondsPassed.toFixed(3)}</p>
-            <Characters />
+            <Characters characterList={characterList} />
           </div>
         )}
-        <div id="frame">
+        <div className="frame">
           <img
             id="stage"
             onClick={openTarget}
