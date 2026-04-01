@@ -32,8 +32,8 @@ function App() {
       <header>
         <h1>Where's Waldo</h1>
       </header>
-      <div id="stages">
-        <ul>
+      <div>
+        <ul id="stages">
           {stages &&
             stages.map((stage) => (
               <Card

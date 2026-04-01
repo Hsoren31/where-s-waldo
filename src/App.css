@@ -51,10 +51,11 @@ img {
 }
 
 #stages {
-  border: 2px solid purple;
   padding: 1rem;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: end;
 }
 
 #stage_card {
