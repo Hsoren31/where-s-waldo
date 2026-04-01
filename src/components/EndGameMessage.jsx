@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router";
 
-function EndGameMessage({ gameOver, time }) {
+function EndGameMessage({ title, gameOver, time }) {
   const modalRef = useRef();
   const [name, setName] = useState("");
   const [error, setError] = useState({ state: false, msg: "" });
@@ -54,7 +54,7 @@ function EndGameMessage({ gameOver, time }) {
     <>
       {gameOver && (
         <dialog ref={modalRef}>
-          <h1>Space Station</h1>
+          <h1>{title}</h1>
           <h2>Congratulations!!</h2>
           <p>You found everyone in {time}</p>
           <form>

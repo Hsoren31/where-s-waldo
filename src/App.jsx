@@ -8,7 +8,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://wheres-waldo-api-production-a65d.up.railway.app/game/stages")
+    fetch("https://wheres-waldo-api-production-a65d.up.railway.app/stages")
       .then((response) => {
         if (response.status >= 400) {
           throw new Error("server error");

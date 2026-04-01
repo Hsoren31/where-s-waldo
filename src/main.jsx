@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <Leaderboard />,
   },
   {
-    path: "/game",
+    path: "/:stageTitle",
     element: <Game />,
   },
 ]);

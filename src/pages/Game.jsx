@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import CharacterModal from "../components/CharacterModal/CharacterModal";
 import { fetchGame, fetchGuess } from "../hooks/fetchGuess";
@@ -8,6 +9,10 @@ import StartScreen from "../components/StartScreen";
 import Characters from "../components/Characters";
 
 function Game() {
+  const { stageTitle } = useParams();
+  const [stage, setStage] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [characterList, setCharacterList] = useState();
   const [gameActive, setGameActive] = useState(false);
   const [gameOver, setGameOver] = useState(false);
@@ -21,7 +26,7 @@ function Game() {
   const intervalRef = useRef(null);
 
   const startGame = async () => {
-    const game = await fetchGame();
+    const game = await fetchGame(stageTitle);
     localStorage.setItem("game", game.id);
     setGameActive(true);
     setCharacterList(game.characters);
@@ -51,7 +56,7 @@ function Game() {
   };
 
   async function handleGuessSubmit(e) {
-    let result = await fetchGuess({
+    let result = await fetchGuess(stageTitle, {
       characterGuess: e.target.value,
       locationGuess: coordinates,
     });
@@ -102,9 +107,35 @@ function Game() {
     secondsPassed = (now - startTime) / 1000;
   }
 
+  useEffect(() => {
+    fetch(
+      `https://wheres-waldo-api-production-a65d.up.railway.app/stages/${stageTitle}`
+    )
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("server error");
+        }
+        return response.json();
+      })
+      .then((response) => setStage(response))
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
+  }, [stageTitle]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+  if (error) {
+    return <p>A network error has occured.</p>;
+  }
+
   return (
     <>
-      <StartScreen startScreen={startScreen} startGame={startGame} />
+      <StartScreen
+        title={stageTitle}
+        startScreen={startScreen}
+        startGame={startGame}
+      />
       <ToastContainer />
       <div id="stage">
         {gameActive && (
@@ -117,7 +148,7 @@ function Game() {
           <img
             id="stage"
             onClick={openTarget}
-            src="../space_station_wheres_waldo.jpg"
+            src={stage.image.url}
             className={`${gameActive ? "gameActive" : "gameInActive"}`}
           />
           {gameActive && <Markers markers={markers} />}
@@ -130,7 +161,7 @@ function Game() {
           closeTarget={closeTarget}
         />
       </div>
-      <EndGameMessage time={time} gameOver={gameOver} />
+      <EndGameMessage title={stageTitle} time={time} gameOver={gameOver} />
     </>
   );
 }

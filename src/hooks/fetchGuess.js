@@ -1,7 +1,7 @@
-async function fetchGame() {
+async function fetchGame(stageTitle) {
   try {
     const response = await fetch(
-      `https://wheres-waldo-api-production-a65d.up.railway.app/game/create/space_station`,
+      `https://wheres-waldo-api-production-a65d.up.railway.app/game/create/${stageTitle}`,
       {
         method: "POST",
         credentials: "include",
@@ -18,11 +18,11 @@ async function fetchGame() {
   }
 }
 
-async function fetchGuess(guess) {
+async function fetchGuess(stageTitle, guess) {
   try {
     const game = localStorage.getItem("game");
     const response = await fetch(
-      "https://wheres-waldo-api-production-a65d.up.railway.app/game/guess/space_station",
+      `https://wheres-waldo-api-production-a65d.up.railway.app/game/guess/${stageTitle}`,
       {
         method: "Post",
         credentials: "include",

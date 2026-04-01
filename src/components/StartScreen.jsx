@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-function StartScreen({ startScreen, startGame }) {
+function StartScreen({ title, startScreen, startGame }) {
   const dialogRef = useRef();
   const [HowToPlayVisibility, setHowToPlayVisibility] = useState(false);
 
@@ -21,7 +21,7 @@ function StartScreen({ startScreen, startGame }) {
 
   return (
     <dialog ref={dialogRef}>
-      <h1>Space Station</h1>
+      <h1>{title}</h1>
       <button onClick={showHowTo}>How to Play</button>
       <HowToPlay visibility={HowToPlayVisibility} close={closeHowTo} />
       <button onClick={startGame}>Start</button>
