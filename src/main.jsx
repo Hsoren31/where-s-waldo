@@ -14,12 +14,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/leaderboard",
-    element: <Leaderboard />,
-  },
-  {
     path: "/:stageTitle",
     element: <Game />,
+  },
+  {
+    path: "/leaderboard/:stageTitle",
+    element: <Leaderboard />,
   },
 ]);
 

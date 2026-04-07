@@ -1,20 +1,38 @@
 import { useState, useEffect } from "react";
 import "./Leaderboard.css";
-import { Link } from "react-router";
-import { fetchLeaderboard } from "../../hooks/fetchGuess";
+import { Link, useParams } from "react-router";
+
+async function fetchLeaderboard(stageTitle) {
+  try {
+    const response = await fetch(
+      `https://wheres-waldo-api-production-a65d.up.railway.app/game/leaderboard/${stageTitle}`,
+      {
+        method: "Get",
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 function Leaderboard() {
+  const { stageTitle } = useParams();
   const [leaderboard, setLeaderboard] = useState(null);
 
   useEffect(() => {
-    fetchLeaderboard().then((result) => setLeaderboard(result));
-  }, []);
+    fetchLeaderboard(stageTitle).then((result) => setLeaderboard(result));
+  }, [stageTitle]);
 
   return (
     <div id="leaderboard_content">
       <h1>High Scores</h1>
       <table>
-        <caption>Space Station</caption>
+        <caption>{stageTitle}</caption>
         <thead>
           <tr>
             <th>Rank</th>

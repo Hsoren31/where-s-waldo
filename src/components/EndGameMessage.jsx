@@ -34,14 +34,14 @@ function EndGameMessage({ title, gameOver, time }) {
         throw new Error(`Response Status: ${response.status}`);
       }
       localStorage.removeItem("game");
-      navigate("/leaderboard");
+      navigate(`/leaderboard/${title}`);
     } catch (err) {
       console.error(err.message);
     }
   }
 
   function handleSkip() {
-    navigate("/leaderboard");
+    navigate(`/leaderboard/${title}`);
   }
 
   useEffect(() => {
