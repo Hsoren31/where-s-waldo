@@ -13,6 +13,19 @@
   gap: 10px;
 }
 
+.stage_card {
+  transition: transform 450ms, border-color 450ms, box-shadow 450ms,
+    border-width 450ms, padding 450ms;
+}
+
+.stage_card:hover {
+  border-color: var(--clr-accent);
+  border-radius: 3px;
+  border-width: 2.5px;
+  box-shadow: 1px 2px 8px 1px var(--clr-accent);
+  padding: 1em;
+}
+
 .img_card {
   width: 100%;
   aspect-ratio: 4 /3;

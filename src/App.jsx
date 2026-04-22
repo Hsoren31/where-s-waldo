@@ -50,7 +50,7 @@ function App() {
 
 function Card({ image, title }) {
   return (
-    <div id="stage_card">
+    <div className="stage_card">
       <Link to={`/${title}`}>
         <div className="img_card">
           <img src={image} />
