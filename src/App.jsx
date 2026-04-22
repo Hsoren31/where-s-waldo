@@ -52,7 +52,9 @@ function Card({ image, title }) {
   return (
     <div id="stage_card">
       <Link to={`/${title}`}>
-        <img src={image} />
+        <div className="img_card">
+          <img src={image} />
+        </div>
         <h2>{title}</h2>
       </Link>
     </div>
