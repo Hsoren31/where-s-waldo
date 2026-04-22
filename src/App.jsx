@@ -32,7 +32,7 @@ function App() {
       <header>
         <h1>Where's Waldo</h1>
       </header>
-      <div>
+      <main>
         <ul id="stages">
           {stages &&
             stages.map((stage) => (
@@ -43,7 +43,16 @@ function App() {
               />
             ))}
         </ul>
-      </div>
+      </main>
+      <footer>
+        <p>
+          Project on{" "}
+          <a href="https://github.com/Hsoren31/where-s-waldo" target="_blank">
+            Github
+          </a>
+          . Created by Haley Sorensen
+        </p>
+      </footer>
     </>
   );
 }
