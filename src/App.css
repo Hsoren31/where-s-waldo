@@ -56,6 +56,12 @@ main {
   border-radius: 3px;
 }
 
+#start_screen {
+  display: grid;
+  gap: 5px;
+  padding: 2em 4em;
+}
+
 .character-dialog {
   background: transparent;
   border: none;

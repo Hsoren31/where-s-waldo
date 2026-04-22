@@ -20,7 +20,7 @@ function StartScreen({ title, startScreen, startGame }) {
   }
 
   return (
-    <dialog ref={dialogRef}>
+    <dialog ref={dialogRef} id="start_screen">
       <h1>{title}</h1>
       <button onClick={showHowTo}>How to Play</button>
       <HowToPlay visibility={HowToPlayVisibility} close={closeHowTo} />
