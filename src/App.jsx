@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="loading">Loading...</p>;
   }
   if (error) {
     return <p>A network error has occured.</p>;
