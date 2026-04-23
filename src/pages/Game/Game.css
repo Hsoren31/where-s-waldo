@@ -90,6 +90,29 @@
   background-color: transparent;
 }
 
+#end_game_dialog {
+  display: grid;
+  gap: 10px;
+  padding: 2rem;
+
+  h1,
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+#end_game_dialog > form {
+  display: grid;
+  gap: 5px;
+
+  div {
+    display: flex;
+    gap: 3px;
+  }
+}
+
 @position-try --bottom {
   top: unset;
   bottom: anchor(top);

@@ -53,21 +53,23 @@ function EndGameMessage({ title, gameOver, time }) {
   return (
     <>
       {gameOver && (
-        <dialog ref={modalRef}>
+        <dialog id="end_game_dialog" ref={modalRef}>
           <h1>{title}</h1>
           <h2>Congratulations!!</h2>
           <p>You found everyone in {time}</p>
           <form>
             <label htmlFor="name">Add your score to the Leaderboard</label>
             {error && <p>{error.msg}</p>}
-            <input
-              type="text"
-              name="name"
-              id="name"
-              value={name}
-              onChange={handleChange}
-            />
-            <button onClick={handleSubmit}>Enter</button>
+            <div>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={name}
+                onChange={handleChange}
+              />
+              <button onClick={handleSubmit}>Enter</button>
+            </div>
           </form>
           <button onClick={handleSkip}>Skip to Leaderboard</button>
         </dialog>
