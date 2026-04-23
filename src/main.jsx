@@ -5,7 +5,7 @@ import "./index.css";
 import App from "./App.jsx";
 import Leaderboard from "./pages/leaderboard/Leaderboard.jsx";
 import ErrorPage from "./pages/errorPage";
-import Game from "./pages/Game.jsx";
+import Game from "./pages/Game/Game.jsx";
 
 const router = createBrowserRouter([
   {

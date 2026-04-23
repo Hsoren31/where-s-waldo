@@ -1,0 +1,107 @@
+#start_screen {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+  padding: 2em 4em;
+}
+
+.gameInActive {
+  filter: blur(1rem);
+}
+
+#stage,
+#characters {
+  position: relative;
+}
+
+#sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 0.5rem;
+  font-size: var(--fs-medium);
+  background-color: hsla(0, 0%, 3%, 0.4);
+  z-index: 999;
+
+  display: flex;
+  gap: 5px;
+}
+
+#stopwatch {
+  width: 100px;
+  margin: auto;
+}
+
+.frame {
+  position: relative;
+}
+
+#stage {
+  margin-top: 80px;
+  box-shadow: 1px 1px 5px 3px var(--clr-accent);
+}
+
+#characters {
+  width: 100%;
+  height: 75px;
+  object-fit: contain;
+}
+
+#target {
+  anchor-name: --target;
+  width: 30px;
+  height: 30px;
+
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border: 3px solid var(--clr-select);
+  border-radius: 50%;
+}
+
+#menu {
+  position: absolute;
+  position-anchor: --target;
+  left: anchor(right);
+  top: anchor(top);
+  position-try-fallbacks: --bottom, --right, --bottom-right;
+}
+
+#menu > ul {
+  list-style: none;
+  padding: 3px;
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(45px, 1fr);
+  gap: 2px;
+  font-size: 1rem;
+}
+
+.checklist_btn {
+  min-width: 100%;
+  padding: 1px 2px;
+}
+
+.marker {
+  position: absolute;
+  font-size: 25px;
+  color: var(--clr-success);
+  text-shadow: 1px 2px 3px black;
+  transform: translate(-50%, -50%);
+  background-color: transparent;
+}
+
+@position-try --bottom {
+  top: unset;
+  bottom: anchor(top);
+}
+
+@position-try --right {
+  left: unset;
+  right: anchor(left);
+}
+
+@position-try --bottom-right {
+  inset: unset;
+  bottom: anchor(top);
+  right: anchor(left);
+}

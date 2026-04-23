@@ -1,5 +1,3 @@
-import "./CharacterModal.css";
-
 function CharacterModal({
   showTarget,
   closeTarget,
@@ -41,7 +39,7 @@ function ChecklistButtons({ list, handleGuessSubmit }) {
       </button>
     </li>
   ));
-  return <ul>{listItems}</ul>;
+  return <ul id="checklist_btns">{listItems}</ul>;
 }
 
 export default CharacterModal;

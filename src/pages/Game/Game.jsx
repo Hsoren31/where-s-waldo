@@ -1,12 +1,13 @@
+import "../Game/Game.css";
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
-import CharacterModal from "../components/CharacterModal/CharacterModal";
-import { fetchGame, fetchGuess } from "../hooks/fetchGuess";
-import EndGameMessage from "../components/EndGameMessage";
-import Markers from "../components/Markers";
-import StartScreen from "../components/StartScreen";
-import Characters from "../components/Characters";
+import CharacterModal from "../../components/CharacterModal";
+import { fetchGame, fetchGuess } from "../../hooks/fetchGuess";
+import EndGameMessage from "../../components/EndGameMessage";
+import Markers from "../../components/Markers";
+import StartScreen from "../../components/StartScreen";
+import Characters from "../../components/Characters";
 
 function Game() {
   const { stageTitle } = useParams();
@@ -140,13 +141,12 @@ function Game() {
       <div id="stage">
         {gameActive && (
           <div id="sidebar">
-            <p>{secondsPassed.toFixed(3)}</p>
+            <p id="stopwatch">{secondsPassed.toFixed(3)}</p>
             <Characters characterList={characterList} />
           </div>
         )}
         <div className="frame">
           <img
-            id="stage"
             onClick={openTarget}
             src={stage.image.url}
             className={`${gameActive ? "gameActive" : "gameInActive"}`}
